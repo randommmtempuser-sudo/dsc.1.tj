@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart City Dushanbe - News & Articles</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c5f7e;
+            --secondary: #4a90a4;
+            --accent: #d4af37;
+            --text: #333;
+            --text-light: #666;
+            --bg: #ffffff;
+            --bg-alt: #f8f9fa;
+            --border: #e0e0e0;
+            --bg-color: #f8f9fa;
+            --card-bg-color: #fff;
+            --marquee-duration: 10s;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            color: var(--text);
+            line-height: 1.6;
+            background: var(--bg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: var(--bg);
+            border-bottom: 2px solid var(--primary);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: var(--primary);
+        }
+
+        
+
+        .logo-text h1 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text p {
+            font-size: 12px;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 15px;
+            padding: 5px 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        nav a:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+
+        .hero p {
+            font-size: 18px;
+            opacity: 0.95;
+        }
+
+        /* Main Content */
+        main {
+            padding: 60px 0;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        /* Featured Article */
+        .featured {
+            margin-bottom: 50px;
+        }
+
+        .article-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .article-card:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .article-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0);
+            transition: background 0.3s ease;
+        }
+
+        .article-card:hover .article-image::after {
+            background: rgba(0,0,0,0.1);
+        }
+
+        .article-content {
+            padding: 30px;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .article-title {
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 400;
+            line-height: 1.3;
+        }
+
+        .article-title a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .article-title a:hover {
+            color: var(--primary);
+        }
+
+        .article-excerpt {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .read-more {
+            display: inline-block;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .read-more:hover {
+            border-bottom-color: var(--primary);
+        }
+
+        /* Article List */
+        .article-list {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .article-list .article-card {
+            display: flex;
+            gap: 20px;
+        }
+
+        .article-list .article-image {
+            width: 250px;
+            height: 180px;
+            flex-shrink: 0;
+        }
+
+        .article-list .article-content {
+            padding: 15px 20px 15px 0;
+        }
+
+        .article-list .article-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+        }
+
+        .sidebar-section {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-section h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: var(--primary);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+        }
+
+        .category-list {
+            list-style: none;
+        }
+
+        .category-list li {
+            margin-bottom: 12px;
+        }
+
+        .category-list a {
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            transition: color 0.3s ease;
+        }
+
+        .category-list a:hover {
+            color: var(--primary);
+        }
+
+        .category-count {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .recent-post {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .recent-post:last-child {
+            border-bottom: none;
+        }
+
+        .recent-post a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 15px;
+            display: block;
+            margin-bottom: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .recent-post a:hover {
+            color: var(--primary);
+        }
+
+        .recent-date {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .partner {
+            position: relative;
+            overflow: hidden;
+            width: 80%;
+            height: 30vh;
+            margin: 0 auto;
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0);
+        }
+
+        .partner::before,
+        .partner::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100px;
+            pointer-events: none;
+            z-index: 2;
+            background: linear-gradient(to right, transparent);
+        }
+        .partner::after {
+            right: 0;
+            transform: rotate(180deg);
+        }
+        .partner::before {
+            left: 0;
+        }
+
+        .partner-track {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            width: auto;
+            animation: slide var(--marquee-duration) linear infinite;
+        }
+
+        .partner:hover .partner-track {
+            animation-play-state: paused;
+        }
+
+        .partner img {
+            height: 100px;
+            width: auto;
+            display: block;
+            filter: grayscale(0.15);
+            opacity: 1;
+            transition: transform 0.2s, filter 0.2s, opacity 0.2s;
+            background: var(--card-bg-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+        }
+
+        .partner img:hover {
+            transform: translateY(-3px);
+            filter: none;
+            opacity: 1;
+        }
+
+        @keyframes slide {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 30px;
+            justify-items: center;
+        }
+
+        .footer-section h4 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .footer-section p, .footer-section a {
+            font-size: 14px;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.8;
+        }
+
+        .footer-section a {
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .article-list .article-card {
+                flex-direction: column;
+            }
+
+            .article-list .article-image {
+                width: 100%;
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero h2 {
+                font-size: 32px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .article-image {
+                height: 250px;
+            }
+
+            .article-title {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <div class="logo-icon">
+                        <img src="./assets/logo.png" alt="" width="60" height="60">
+                    </div>
+                    <div class="logo-text">
+                        <h1>Smart City Dushanbe</h1>
+                        <p>Building Tomorrow's City Today</p>
+                    </div>
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Technology</a></li>
+                        <li><a href="#">Infrastructure</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">About</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="hero">
+        <div class="container">
+            <h2>Transforming Dushanbe Through Innovation</h2>
+            <p>Latest news, insights, and developments in our smart city initiative</p>
+        </div>
+    </div>
+
+    <main>
+        <div class="container">
+            <div class="content-grid">
+                <div class="main-content">
+                    <section class="featured">
+                        <article class="article-card">
+                            <div class="article-image">
+                                <img src="./assets/presidentEmomaliRahmon.jpg" alt="" width="100%" >
+                            </div>
+                            <div class="article-content">
+                                <div class="article-meta">
+                                    <span>📅 October 22, 2025</span>
+                                    <span>👤 City Planning Department</span>
+                                    <span>🏷️ Infrastructure</span>
+                                </div>
+                                <h2 class="article-title">
+                                    <a href="#">New Smart Traffic Management System Reduces Congestion by 40%</a>
+                                </h2>
+                                <p class="article-excerpt">
+                                    Dushanbe's newly implemented intelligent traffic management system has shown remarkable results in its first quarter of operation. Using AI-powered cameras and real-time data analysis, the system optimizes traffic flow across major intersections, significantly reducing travel times and emissions throughout the city center.
+                                </p>
+                                <a href="#" class="read-more">Read Full Article →</a>
+                            </div>
+                        </article>
+                    </section>
+
+                    <section class="article-list">
+                        <article class="article-card">
+                            <div class="article-image">
+                                <img src="./assets/INDEPENDENCE-DAY.jpg" alt="" width="100%">
+                            </div>
+                            <div class="article-content">
+                                <div class="article-meta">
+                                    <span>📅 October 20, 2025</span>
+                                    <span>🏷️ Technology</span>
+                                </div>
+                                <h3 class="article-title">
+                                    <a href="#">City-Wide Wi-Fi Network Expansion Reaches 85% Coverage</a>
+                                </h3>
+                                <p class="article-excerpt">
+                                    The municipal free Wi-Fi network has expanded to cover most public spaces, parks, and major thoroughfares, providing citizens with reliable internet access.
+                                </p>
+                                <a href="#" class="read-more">Read More →</a>
+                            </div>
+                        </article>
+
+                        <article class="article-card">
+                            <div class="article-image">
+                                <img src="./assets/dushanbe.svg" alt="" width="100">
+                            </div>
+                            <div class="article-content">
+                                <div class="article-meta">
+                                    <span>📅 October 18, 2025</span>
+                                    <span>🏷️ Environment</span>
+                                </div>
+                                <h3 class="article-title">
+                                    <a href="#">Solar-Powered Street Lighting Initiative Enters Phase Two</a>
+                                </h3>
+                                <p class="article-excerpt">
+                                    Following successful pilot testing, the city is rolling out 5,000 additional solar-powered LED streetlights across residential neighborhoods.
+                                </p>
+                                <a href="#" class="read-more">Read More →</a>
+                            </div>
+                        </article>
+
+                        <article class="article-card">
+                            <div class="article-image">
+                                <img src="./assets/tjk.png" alt="" width="160">
+                            </div>
+                            <div class="article-content">
+                                <div class="article-meta">
+                                    <span>📅 October 15, 2025</span>
+                                    <span>🏷️ Community</span>
+                                </div>
+                                <h3 class="article-title">
+                                    <a href="#">New Digital Services Portal Simplifies Municipal Applications</a>
+                                </h3>
+                                <p class="article-excerpt">
+                                    Citizens can now access over 50 government services online, from permit applications to utility bill payments, through a streamlined digital platform.
+                                </p>
+                                <a href="#" class="read-more">Read More →</a>
+                            </div>
+                        </article>
+                    </section>
+                </div>
+
+                <aside class="sidebar">
+                    <div class="sidebar-section">
+                        <h3>Categories</h3>
+                        <ul class="category-list">
+                            <li><a href="#">Technology <span class="category-count">24</span></a></li>
+                            <li><a href="#">Infrastructure <span class="category-count">18</span></a></li>
+                            <li><a href="#">Environment <span class="category-count">15</span></a></li>
+                            <li><a href="#">Community <span class="category-count">22</span></a></li>
+                            <li><a href="#">Transportation <span class="category-count">12</span></a></li>
+                            <li><a href="#">Energy <span class="category-count">9</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>Recent Articles</h3>
+                        <div>
+                            <div class="recent-post">
+                                <a href="#">Public Consultation Opens for New Green Spaces Initiative</a>
+                                <div class="recent-date">October 21, 2025</div>
+                            </div>
+                            <div class="recent-post">
+                                <a href="#">Smart Waste Collection Pilot Shows Promising Results</a>
+                                <div class="recent-date">October 19, 2025</div>
+                            </div>
+                            <div class="recent-post">
+                                <a href="#">Electric Bus Fleet Expansion Announced</a>
+                                <div class="recent-date">October 17, 2025</div>
+                            </div>
+                            <div class="recent-post">
+                                <a href="#">Partnership with Tech University Launched</a>
+                                <div class="recent-date">October 14, 2025</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>Subscribe</h3>
+                        <p style="margin-bottom: 15px;">Stay updated with the latest developments in Smart City Dushanbe.</p>
+                        <p><a href="#" style="color: var(--primary); font-weight: 600;">Subscribe to Newsletter →</a></p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+        <div class="partner">
+            <div class="partner-track">
+                <div class="partner"><img src="./assets/Barqi_tojik.jpg" alt="" width="260" height="100"></div>
+                <div class="partner"><img src="./assets/khovar.png" alt="" width="260" height="100"></div>
+                <div class="partner"><img src="./assets/mvd.jpg" alt="" width="260" height="100"></div>
+                <div class="partner"><img src="./assets/ИОГВ.jpg" alt="" width="260" height="100"></div>
+
+                <div class="partner"><img src="./assets/Barqi_tojik.jpg" alt="" width="260" height="100"></div>
+                <div class="partner"><img src="./assets/khovar.png" alt="" width="260" height="100"></div>
+                <div class="partner"><img src="./assets/mvd.jpg" alt="" width="260" height="100"></div>
+                <div class="partner"><img src="./assets/ИОГВ.jpg" alt="" width="260" height="100"></div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <img src="./assets/logo.png" alt="" width="150" height="180">
+                </div>
+                <div class="footer-section">
+                    <h4>About Smart City Dushanbe</h4>
+                    <p>An initiative to transform Dushanbe into a modern, sustainable, and technology-driven city that enhances the quality of life for all residents through innovative solutions and community engagement.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#">About the Project</a>
+                    <a href="#">Latest Updates</a>
+                    <a href="#">Get Involved</a>
+                    <a href="#">Contact Us</a>
+                    <a href="#">Press Room</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Smart City Coordination Office<br>
+                    Rudaki Avenue, Dushanbe<br>
+                    Republic of Tajikistan<br><br>
+                    Email: info@smartcity.tj<br>
+                    Phone: +992 (37) 221-XXXX</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Smart City Dushanbe. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
