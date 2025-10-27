@@ -30,12 +30,54 @@
             color: var(--text);
             line-height: 1.6;
             background: var(--bg);
+            min-height: 100vh;
+            position: relative;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+        }
+
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            z-index: 2000;
+            transition: opacity 0.4s ease;
+        }
+
+        .preloader.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .preloader-spinner {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: 6px solid rgba(44, 95, 126, 0.15);
+            border-top-color: var(--primary);
+            animation: spin 1s linear infinite;
+        }
+
+        .preloader-text {
+            font-size: 14px;
+            letter-spacing: 1.5px;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         /* Header */
@@ -96,24 +138,78 @@
             border-bottom-color: var(--accent);
         }
 
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 60px 0;
+
+        .top-banner-section {
+            background: var(--bg);
+            padding: 40px 0 20px;
+        }
+
+        .banner-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 30px;
+        }
+
+        .banner-card {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .banner-image {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+        }
+
+        .banner-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .banner-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .banner-highlight {
+            border: 2px solid #b2332a;
+            padding: 16px;
             text-align: center;
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.4;
+            letter-spacing: 0.5px;
+            color: var(--text);
         }
 
-        .hero h2 {
-            font-size: 42px;
-            margin-bottom: 15px;
-            font-weight: 400;
+        .banner-highlight span {
+            display: block;
         }
 
-        .hero p {
-            font-size: 18px;
-            opacity: 0.95;
+        .banner-button {
+            align-self: center;
+            background: #4a3626;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 30px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.3s ease;
         }
+
+        .banner-button:hover {
+            background: #2c1f15;
+        }
+
 
         /* Main Content */
         main {
@@ -136,6 +232,7 @@
             border: 1px solid var(--border);
             overflow: hidden;
             transition: box-shadow 0.3s ease;
+            cursor: pointer;
         }
 
         .article-card:hover {
@@ -448,9 +545,82 @@
             color: rgba(255,255,255,0.8);
         }
 
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: var(--bg);
+            width: min(90%, 720px);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 320px;
+            overflow: hidden;
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-body {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .modal-body h3 {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .modal-body p {
+            font-size: 16px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .modal-close {
+            align-self: flex-end;
+            background: none;
+            border: none;
+            font-size: 28px;
+            line-height: 1;
+            cursor: pointer;
+            color: var(--text);
+        }
+
         /* Responsive */
         @media (max-width: 968px) {
             .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .banner-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -520,19 +690,48 @@
         </div>
     </header>
 
-    <div class="hero">
-        <div class="container">
-            <h2>Табдил додани Душанбе бо навоварӣ</h2>
-            <p>Хабарҳои охирин, маводи таҳлилӣ ва рушд дар доираи ташаббуси шаҳри интеллектуалии мо</p>
-        </div>
+    <div class="preloader" aria-hidden="false">
+        <div class="preloader-spinner" role="status" aria-label="Загрузка"></div>
+        <div class="preloader-text">Loading Smart City Dushanbe</div>
     </div>
+
+    <section class="top-banner-section">
+        <div class="container">
+            <div class="banner-grid">
+                <article class="banner-card" data-title="Постановление Правительства Республики Таджикистан" data-description="Ознакомьтесь с последними решениями Правительства Республики Таджикистан, направленными на устойчивое развитие столицы и повышение качества жизни жителей." data-image="./assets/presidentEmomaliRahmon.jpg" data-image-alt="Президенти Ҷумҳурии Тоҷикистон Эмомалӣ Раҳмон дар баромад">
+                    <div class="banner-image">
+                        <img src="./assets/presidentEmomaliRahmon.jpg" alt="Президенти Ҷумҳурии Тоҷикистон Эмомалӣ Раҳмон дар баромад">
+                    </div>
+                    <div class="banner-body">
+                        <div class="banner-highlight">
+                            <span>Постановление</span>
+                            <span>Правительства Республики Таджикистан</span>
+                        </div>
+                        <a class="banner-button" href="#">Муфассалтар</a>
+                    </div>
+                </article>
+                <article class="banner-card" data-title="Постановление Председателя города Душанбе" data-description="Последние распоряжения Председателя города Душанбе о развитии городской инфраструктуры и поддержке инициатив жителей." data-image="./assets/MayorRustamiEmomali.jpg" data-image-alt="Раиси шаҳри Душанбе Рустами Эмомалӣ дар ҷаласа">
+                    <div class="banner-image">
+                        <img src="./assets/MayorRustamiEmomali.jpg" alt="Раиси шаҳри Душанбе Рустами Эмомалӣ дар ҷаласа">
+                    </div>
+                    <div class="banner-body">
+                        <div class="banner-highlight">
+                            <span>Постановление</span>
+                            <span>Председателя города Душанбе</span>
+                        </div>
+                        <a class="banner-button" href="#">Муфассалтар</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
 
     <main>
         <div class="container">
             <div class="content-grid">
                 <div class="main-content">
                     <section class="featured">
-                        <article class="article-card">
+                        <article class="article-card" data-title="Ҷамъомади тантанавӣ ба ифтихори 28 — солагии Истиқлолияти давлатии Ҷумҳурии Тоҷикистон" data-description="9 сентябр Асосгузори сулҳу ваҳдати миллӣ — Пешвои миллат, Президенти Ҷумҳурии Тоҷикистон муҳтарам Эмомалӣ Раҳмон ва Раиси шаҳри Душанбе муҳтарам Рустами Эмомалӣ дар Наврӯзгоҳи пойтахт дар ҷамъомади тантанавӣ ба ифтихори 28 — солагии Истиқлолияти давлатии Ҷумҳурии Тоҷикистон ва оғози кори агрегати дуюми нерӯгоҳи барқи обии “Роғун” иштирок карданд." data-image="./assets/RogunIndependence.jpg" data-image-alt="Ҷашни истиқлолият дар Наврӯзгоҳи пойтахт">
                             <div class="article-image">
                                 <img src="./assets/RogunIndependence.jpg" alt="" width="100%" >
                             </div>
@@ -554,7 +753,7 @@
                     </section>
 
                     <section class="article-list">
-                        <article class="article-card">
+                        <article class="article-card" data-title="9 сентябр Рӯзи Истиқлолияти давлатии Ҷумҳурии Тоҷикистон" data-description="Рӯзи Истиқлолияти Ҷумҳурии Тоҷикистон - 9 сентябри соли 1991 Ҷумҳурии Тоҷикистон аз ИҶШС соҳибистиқлол шуд. Иди Истиқлолият яке аз идҳои асосии расмии давлати Тоҷикистон аст." data-image="./assets/INDEPENDENCE-DAY.jpg" data-image-alt="Тантанаҳои ҷашни истиқлолият">
                             <div class="article-image">
                                 <img src="./assets/INDEPENDENCE-DAY.jpg" alt="" width="100%">
                             </div>
@@ -573,7 +772,7 @@
                             </div>
                         </article>
 
-                        <article class="article-card">
+                        <article class="article-card" data-title="5-уми октябр - Рӯзи забони давлатӣ" data-description="Дар Ҷумҳурии Тоҷикистон забони тоҷикӣ ҳамчун забони давлатӣ шинохта шудааст ва 5-уми октябр расман Рӯзи забони давлатӣ таҷлил мегардад." data-image="./assets/October-5.jpg" data-image-alt="Ҷашни Рӯзи забони давлатӣ">
                             <div class="article-image">
                                 <img src="./assets/October-5.jpg" alt="" width="250" height="180">
                             </div>
@@ -592,7 +791,7 @@
                             </div>
                         </article>
 
-                        <article class="article-card">
+                        <article class="article-card" data-title="Меҳргон иди таърихӣ ва миллии мардуми ориёӣ аст" data-description="Ҷашни Меҳргон яке аз ҷашнҳои қадимаи мардуми ориёнажод буда, бо пайдошавӣ ва рушду нумуи кишоварзӣ вобаста аст." data-image="./assets/October-2.png" data-image-alt="Ҷашни Меҳргон дар Тоҷикистон">
                             <div class="article-image">
                                 <img src="./assets/October-2.png" alt="" width="250" height="180">
                             </div>
@@ -673,6 +872,19 @@
         </div>
     </main>
 
+    <div class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="modal-content">
+            <button class="modal-close" type="button" aria-label="Пӯшидан">&times;</button>
+            <div class="modal-image">
+                <img src="" alt="">
+            </div>
+            <div class="modal-body">
+                <h3></h3>
+                <p></p>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -705,5 +917,68 @@
             </div>
         </div>
     </footer>
+    <script>
+        (function () {
+            const preloader = document.querySelector('.preloader');
+            const modal = document.querySelector('.modal');
+            const modalImage = modal.querySelector('.modal-image img');
+            const modalTitle = modal.querySelector('.modal-body h3');
+            const modalDescription = modal.querySelector('.modal-body p');
+            const closeButton = modal.querySelector('.modal-close');
+            const triggers = document.querySelectorAll('.banner-card, .article-card');
+
+            window.addEventListener('load', () => {
+                requestAnimationFrame(() => {
+                    preloader.classList.add('hide');
+                    preloader.setAttribute('aria-hidden', 'true');
+                });
+            });
+
+            const openModal = ({ image, imageAlt, title, description }) => {
+                modalImage.src = image || '';
+                modalImage.alt = imageAlt || '';
+                modalTitle.textContent = title || '';
+                modalDescription.textContent = description || '';
+                modal.classList.add('active');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            };
+
+            const closeModal = () => {
+                modal.classList.remove('active');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            };
+
+            triggers.forEach((card) => {
+                card.addEventListener('click', (event) => {
+                    const link = event.target.closest('a');
+                    if (link) {
+                        event.preventDefault();
+                    }
+                    openModal({
+                        image: card.dataset.image,
+                        imageAlt: card.dataset.imageAlt,
+                        title: card.dataset.title,
+                        description: card.dataset.description
+                    });
+                });
+            });
+
+            closeButton.addEventListener('click', closeModal);
+
+            modal.addEventListener('click', (event) => {
+                if (!event.target.closest('.modal-content')) {
+                    closeModal();
+                }
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && modal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
